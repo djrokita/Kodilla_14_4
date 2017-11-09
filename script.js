@@ -51,6 +51,9 @@ var MovieTitle = React.createClass({
 });
 
 var Movie = React.createClass({
+  propTypes: {
+    feat: React.PropTypes.object.isRequired
+  },
   render: function() {
     return (React.createElement('li', {},
       React.createElement(MovieTitle, {
@@ -72,8 +75,6 @@ var list = movies.map(function(item) {
     feat: item
   });
 });
-
-console.log(list);
 
 var MovieBox = React.createClass({
   render: function() {
