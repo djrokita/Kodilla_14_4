@@ -39,57 +39,77 @@ var movies = [{
 // Klasy
 
 var MovieDesc = React.createClass({
+  propTypes: {
+    text: React.PropTypes.string.isRequired
+  },
   render: function() {
-    return React.createElement('p', {}, this.props.feat.desc);
+    return React.createElement('p', {}, this.props.text);
   }
 });
 
 var MovieTitle = React.createClass({
+  propTypes: {
+    title: React.PropTypes.string.isRequired
+  },
   render: function() {
-    return React.createElement('h2', {}, this.props.feat.title);
+    return React.createElement('h2', {}, this.props.title);
+  }
+});
+
+var MoviePoster = React.createClass({
+  propTypes: {
+    image: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return React.createElement('img', {
+      src: this.props.image
+    });
   }
 });
 
 var Movie = React.createClass({
   propTypes: {
-    feat: React.PropTypes.object.isRequired
+    movie: React.PropTypes.object.isRequired
   },
   render: function() {
     return (React.createElement('li', {},
       React.createElement(MovieTitle, {
-        feat: this.props.feat
+        title: this.props.movie.title
       }),
       React.createElement(MovieDesc, {
-        feat: this.props.feat
+        text: this.props.movie.desc
       }),
-      React.createElement('img', {
-        src: this.props.feat.img
+      React.createElement(MoviePoster, {
+        image: this.props.movie.img
       })
     ));
   }
 });
 
-var list = movies.map(function(item) {
-  return React.createElement(Movie, {
-    key: item.id,
-    feat: item
-  });
-});
-
 var MovieBox = React.createClass({
+  propTypes: {
+    feat: React.PropTypes.array.isRequired
+  },
   render: function() {
+    var list = this.props.feat.map(function(item) {
+      console.log(item);
+      return React.createElement(Movie, {
+        key: item.id,
+        movie: item
+      });
+    });
     return (React.createElement('div', {},
       React.createElement('h1', {}, 'Lista filmów'),
-      React.createElement('ul', {},
-        list
-      )
+      React.createElement('ul', {}, list)
     ));
   }
 });
 
 // Obiekt
 
-var box = React.createElement(MovieBox, {});
+var box = React.createElement(MovieBox, {
+  feat: movies
+});
 
 // Renderowanie całości
 
